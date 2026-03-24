@@ -1,15 +1,810 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>İlk Site</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Renova Pro | Profesyonel Renovasyon Hizmetleri</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #121821;
+      --panel-2: #1a2330;
+      --text: #f4f7fb;
+      --muted: #a8b3c2;
+      --line: #273244;
+      --accent: #d9a441;
+      --accent-2: #f3c86b;
+      --success: #89d185;
+      --shadow: 0 20px 50px rgba(0,0,0,.28);
+      --radius: 20px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #0b0f14 0%, #0f141c 100%);
+      color: var(--text);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(11,15,20,.75);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 76px;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #111;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pill {
+      color: var(--success);
+      background: rgba(137,209,133,.12);
+      border: 1px solid rgba(137,209,133,.22);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #111;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.02);
+      border-color: rgba(255,255,255,.08);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 72px 0 44px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-card,
+    .section-card,
+    .service-card,
+    .project-card,
+    .contact-card,
+    .stat-card,
+    .review-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      color: var(--accent-2);
+      background: rgba(217,164,65,.10);
+      border: 1px solid rgba(217,164,65,.18);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 6vw, 62px);
+      line-height: 1.04;
+      letter-spacing: -1.5px;
+    }
+
+    .hero-copy p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+      margin: 18px 0 28px;
+      max-width: 62ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .stat-card {
+      padding: 18px;
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .hero-card {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+      background:
+        radial-gradient(circle at top right, rgba(217,164,65,.22), transparent 32%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+    }
+
+    .mock-photo {
+      min-height: 280px;
+      border-radius: 18px;
+      background:
+        linear-gradient(rgba(0,0,0,.22), rgba(0,0,0,.42)),
+        url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80') center/cover;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .hero-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-list-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      color: var(--muted);
+    }
+
+    .hero-list-item strong { color: var(--text); }
+
+    section {
+      padding: 28px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 8px;
+      font-size: clamp(26px, 4vw, 38px);
+      letter-spacing: -.8px;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 60ch;
+    }
+
+    .services-grid,
+    .projects-grid,
+    .reviews-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .service-card {
+      padding: 24px;
+    }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: rgba(217,164,65,.12);
+      border: 1px solid rgba(217,164,65,.18);
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      font-size: 22px;
+    }
+
+    .service-card h3,
+    .project-card h3,
+    .contact-card h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+
+    .service-card p,
+    .project-card p,
+    .contact-card p,
+    .review-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .service-card ul {
+      padding-left: 18px;
+      margin: 16px 0 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .projects-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .project-card { overflow: hidden; }
+
+    .project-cover {
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .project-body {
+      padding: 22px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 13px;
+      color: var(--text);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.07);
+      padding: 8px 10px;
+      border-radius: 999px;
+    }
+
+    .reviews-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .review-card {
+      padding: 24px;
+    }
+
+    .review-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .stars { color: var(--accent-2); }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 18px;
+    }
+
+    .contact-card {
+      padding: 28px;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .contact-item {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      color: var(--muted);
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 15px 16px;
+      font: inherit;
+      outline: none;
+    }
+
+    input::placeholder,
+    textarea::placeholder { color: #7f8a99; }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .form-note {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .footer {
+      padding: 30px 0 54px;
+      color: var(--muted);
+    }
+
+    .footer-box {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font: inherit;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .contact-wrap,
+      .services-grid,
+      .projects-grid,
+      .reviews-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-points,
+      .field-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        align-items: flex-start;
+        padding: 14px 0;
+      }
+
+      .mobile-menu-btn { display: inline-flex; }
+
+      .nav-links,
+      .nav-cta {
+        display: none;
+      }
+
+      .nav-links.open,
+      .nav-cta.open {
+        display: flex;
+        width: 100%;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+      }
+
+      .nav-links.open {
+        flex-direction: column;
+        gap: 14px;
+        padding: 8px 0 0;
+      }
+
+      .nav-cta.open {
+        flex-direction: column;
+        align-items: stretch;
+        padding-top: 10px;
+      }
+
+      .hero-grid,
+      .services-grid,
+      .projects-grid,
+      .reviews-grid,
+      .contact-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .hero-card,
+      .service-card,
+      .project-body,
+      .contact-card,
+      .review-card {
+        padding: 20px;
+      }
+
+      h1 { line-height: 1.08; }
+    }
+  </style>
 </head>
 <body>
+  <header class="topbar">
+    <div class="container nav">
+      <a href="#home" class="brand">
+        <div class="brand-mark">R</div>
+        <div>Renova Pro</div>
+      </a>
 
-  <h1>Bu site canlıda güncellendi 🔥</h1>
-  <button onclick="tikla()">Tıkla</button>
+      <button class="mobile-menu-btn" id="menuBtn">Menü</button>
 
-  <script src="script.js"></script>
+      <nav class="nav-links" id="navLinks">
+        <a href="#services">Hizmetler</a>
+        <a href="#projects">Projeler</a>
+        <a href="#reviews">Yorumlar</a>
+        <a href="#contact">İletişim</a>
+      </nav>
+
+      <div class="nav-cta" id="navCta">
+        <div class="pill">7/24 teklif talebi</div>
+        <a class="btn btn-primary" href="#contact">Teklif Al</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">✔ Güvenilir ekip • ✔ Zamanında teslim • ✔ Temiz işçilik</div>
+          <h1>Evinizi ve iş yerinizi baştan aşağı profesyonelce yeniliyoruz.</h1>
+          <p>
+            Boya, alçı, mutfak-banyo yenileme, zemin uygulamaları ve komple tadilat işleriniz için
+            modern, güven veren ve teklif toplamaya odaklı bir web sitesi örneği.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Ücretsiz Keşif Talebi</a>
+            <a class="btn btn-secondary" href="#projects">Projeleri İncele</a>
+          </div>
+
+          <div class="hero-points">
+            <div class="stat-card">
+              <div class="stat-number">120+</div>
+              <div class="stat-label">Tamamlanan proje ve mutlu müşteri teslimi.</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">12 Yıl</div>
+              <div class="stat-label">Renovasyon ve iç mekan uygulama tecrübesi.</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">48 Saat</div>
+              <div class="stat-label">Teklif ve ön değerlendirme için hızlı geri dönüş.</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <div class="mock-photo"></div>
+          <div class="hero-list">
+            <div class="hero-list-item">
+              <span>Hizmet Bölgesi</span>
+              <strong>Paris & Çevresi</strong>
+            </div>
+            <div class="hero-list-item">
+              <span>Uzmanlık</span>
+              <strong>Komple Tadilat</strong>
+            </div>
+            <div class="hero-list-item">
+              <span>Ortalama Dönüş</span>
+              <strong>Aynı Gün</strong>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Hizmetler</h2>
+            <p>Bu alan, müşterinin “siz tam olarak ne yapıyorsunuz?” sorusunu 5 saniyede cevaplamalı.</p>
+          </div>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="service-icon">🏠</div>
+            <h3>Komple Tadilat</h3>
+            <p>Daire, ofis ve ticari alanlar için planlı ve baştan sona renovasyon hizmeti.</p>
+            <ul>
+              <li>Yıkım ve hazırlık</li>
+              <li>Duvar ve tavan işleri</li>
+              <li>Teslim öncesi son kontrol</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">🎨</div>
+            <h3>Boya & İç Mekan</h3>
+            <p>Modern renk uygulamaları, yüzey düzeltme ve temiz işçilik odaklı boya hizmeti.</p>
+            <ul>
+              <li>Saten alçı</li>
+              <li>Duvar boyama</li>
+              <li>Detay temizliği</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">🛁</div>
+            <h3>Mutfak & Banyo</h3>
+            <p>Fonksiyonel, estetik ve dayanıklı yaşam alanları için yenileme çözümleri.</p>
+            <ul>
+              <li>Seramik uygulama</li>
+              <li>Dolap ve tezgah</li>
+              <li>Armatür yenileme</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Öne Çıkan Projeler</h2>
+            <p>Güven satmanın en iyi yolu laf değil, görsel ve sonuç göstermektir.</p>
+          </div>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card">
+            <div class="project-cover" style="background-image:url('https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80')"></div>
+            <div class="project-body">
+              <h3>Modern Mutfak Yenileme</h3>
+              <p>Eski mutfak alanının daha ferah, daha kullanışlı ve daha premium bir görünüme taşınması.</p>
+              <div class="tag-row">
+                <span class="tag">Mutfak</span>
+                <span class="tag">Dolap</span>
+                <span class="tag">Tezgah</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-cover" style="background-image:url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80')"></div>
+            <div class="project-body">
+              <h3>Salon ve Duvar Yenileme</h3>
+              <p>Boya, tavan düzenleme ve zemin dokunuşlarıyla mekanın tamamen yenilenmesi.</p>
+              <div class="tag-row">
+                <span class="tag">Boya</span>
+                <span class="tag">Tavan</span>
+                <span class="tag">Zemin</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-cover" style="background-image:url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80')"></div>
+            <div class="project-body">
+              <h3>Banyo Dönüşümü</h3>
+              <p>Eski ve dar alanın daha temiz, modern ve kullanıcı dostu bir banyoya dönüştürülmesi.</p>
+              <div class="tag-row">
+                <span class="tag">Banyo</span>
+                <span class="tag">Seramik</span>
+                <span class="tag">Armatür</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Müşteri Yorumları</h2>
+            <p>Buradaki içerik gerçek referanslarla değiştirildiğinde sitenin güven gücü ciddi artar.</p>
+          </div>
+        </div>
+
+        <div class="reviews-grid">
+          <article class="review-card">
+            <div class="review-top">
+              <strong>Ayşe K.</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+            <p>İşin başından sonuna kadar düzenli iletişim kurdular, teslim ettikleri sonuç da temiz ve güven vericiydi.</p>
+          </article>
+
+          <article class="review-card">
+            <div class="review-top">
+              <strong>Mehmet T.</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+            <p>Ev tadilatında en büyük korku işin uzamasıdır; burada hem zaman hem işçilik tarafı gayet iyiydi.</p>
+          </article>
+
+          <article class="review-card">
+            <div class="review-top">
+              <strong>Claire D.</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+            <p>Mutfak yenilemesinde beklentimizin üstünde bir sonuç aldık. İletişim ve planlama tarafı güçlüydü.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-wrap">
+        <div class="contact-card">
+          <h3>Hızlı İletişim</h3>
+          <p>Bu blokta gerçek telefon, e-posta, WhatsApp ve hizmet bölgesi bilgilerini göstereceksin.</p>
+
+          <div class="contact-list">
+            <div class="contact-item"><strong>Telefon:</strong> +33 6 XX XX XX XX</div>
+            <div class="contact-item"><strong>E-posta:</strong> contact@renovapro.fr</div>
+            <div class="contact-item"><strong>Bölge:</strong> Cergy-Pontoise / Paris / Val-d’Oise</div>
+            <div class="contact-item"><strong>Çalışma Saatleri:</strong> Pazartesi - Cumartesi / 08:00 - 19:00</div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <h3>Teklif Formu</h3>
+          <p>Şu an demo form. İstersen bunu sonra WhatsApp’a, Formspree’ye ya da gerçek backende bağlarız.</p>
+
+          <form id="quoteForm">
+            <div class="field-row">
+              <input type="text" placeholder="Ad Soyad" required />
+              <input type="tel" placeholder="Telefon" required />
+            </div>
+            <div class="field-row">
+              <input type="email" placeholder="E-posta" />
+              <select>
+                <option>Hizmet Seçin</option>
+                <option>Komple Tadilat</option>
+                <option>Boya & İç Mekan</option>
+                <option>Mutfak & Banyo</option>
+              </select>
+            </div>
+            <textarea placeholder="Kısaca ihtiyacınızı yazın..."></textarea>
+            <button class="btn btn-primary" type="submit">Teklif Gönder</button>
+            <div class="form-note" id="formMessage">Form şu an demo modunda çalışıyor.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-box">
+      <div>© 2026 Renova Pro. Tüm hakları saklıdır.</div>
+      <div>Bu demo yapı, gerçek firma bilgilerine göre özelleştirilmeye hazırdır.</div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    const navCta = document.getElementById('navCta');
+    const quoteForm = document.getElementById('quoteForm');
+    const formMessage = document.getElementById('formMessage');
+
+    menuBtn?.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      navCta.classList.toggle('open');
+    });
+
+    quoteForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formMessage.textContent = 'Demo form gönderildi. Sonraki aşamada bunu gerçek iletişim akışına bağlayacağız.';
+    });
+  </script>
 </body>
 </html>
