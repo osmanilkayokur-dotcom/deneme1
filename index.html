@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Renova Pro | Profesyonel Renovasyon Hizmetleri</title>
+  <title>EGS-MCC | Entreprise générale du bâtiment en Île-de-France</title>
+  <meta name="description" content="EGS-MCC est une entreprise générale du bâtiment intervenant en Île-de-France sur des opérations de gros œuvre, maçonnerie générale, rénovation et travaux tous corps d'état." />
   <style>
     :root {
-      --bg: #0b0f14;
-      --panel: #121821;
-      --panel-2: #1a2330;
-      --text: #f4f7fb;
-      --muted: #a8b3c2;
-      --line: #273244;
-      --accent: #d9a441;
-      --accent-2: #f3c86b;
-      --success: #89d185;
+      --bg: #0d1218;
+      --bg-soft: #121922;
+      --panel: #171f2a;
+      --panel-2: #1d2632;
+      --line: rgba(255,255,255,.08);
+      --line-soft: rgba(255,255,255,.05);
+      --text: #eef3f8;
+      --muted: #aab6c5;
+      --accent: #b9955b;
+      --accent-soft: rgba(185,149,91,.14);
+      --max: 1200px;
+      --radius: 22px;
       --shadow: 0 20px 50px rgba(0,0,0,.28);
-      --radius: 20px;
-      --max: 1180px;
     }
 
     * { box-sizing: border-box; }
@@ -25,7 +27,7 @@
     body {
       margin: 0;
       font-family: Inter, Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #0b0f14 0%, #0f141c 100%);
+      background: linear-gradient(180deg, #0d1218 0%, #101720 100%);
       color: var(--text);
     }
 
@@ -40,43 +42,61 @@
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 50;
-      backdrop-filter: blur(12px);
-      background: rgba(11,15,20,.75);
-      border-bottom: 1px solid rgba(255,255,255,.06);
+      z-index: 100;
+      background: rgba(13,18,24,.84);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line-soft);
     }
 
     .nav {
+      min-height: 80px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 76px;
-      gap: 20px;
+      gap: 18px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       font-weight: 800;
       letter-spacing: .2px;
     }
 
     .brand-mark {
-      width: 42px;
-      height: 42px;
+      width: 46px;
+      height: 46px;
       border-radius: 14px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #111;
       display: grid;
       place-items: center;
+      background: linear-gradient(135deg, #c8ab76, #a88346);
+      color: #111;
       font-weight: 900;
       box-shadow: var(--shadow);
     }
 
+    .brand-text {
+      display: grid;
+      gap: 2px;
+      line-height: 1.05;
+    }
+
+    .brand-text strong {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .brand-text span {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+    }
+
     .nav-links {
       display: flex;
-      gap: 24px;
+      gap: 28px;
       color: var(--muted);
       font-size: 15px;
     }
@@ -87,15 +107,6 @@
       display: flex;
       align-items: center;
       gap: 12px;
-    }
-
-    .pill {
-      color: var(--success);
-      background: rgba(137,209,133,.12);
-      border: 1px solid rgba(137,209,133,.22);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 14px;
     }
 
     .btn {
@@ -112,143 +123,159 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      background: linear-gradient(135deg, #c8ab76, #a88346);
       color: #111;
       box-shadow: var(--shadow);
     }
 
-    .btn-primary:hover { transform: translateY(-1px); }
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+    }
 
     .btn-secondary {
       background: rgba(255,255,255,.02);
-      border-color: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.10);
       color: var(--text);
     }
 
+    .mobile-menu-btn {
+      display: none;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font: inherit;
+    }
+
     .hero {
-      padding: 72px 0 44px;
+      padding: 76px 0 42px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.15fr .85fr;
+      grid-template-columns: 1.1fr .9fr;
       gap: 28px;
       align-items: stretch;
     }
 
     .hero-copy,
-    .hero-card,
-    .section-card,
-    .service-card,
-    .project-card,
-    .contact-card,
-    .stat-card,
-    .review-card {
+    .hero-visual,
+    .expertise-card,
+    .engagement-card,
+    .realisation-card,
+    .contact-card {
       background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-      border: 1px solid rgba(255,255,255,.07);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
 
     .hero-copy {
-      padding: 34px;
+      padding: 36px;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       padding: 10px 14px;
       border-radius: 999px;
-      font-size: 14px;
-      color: var(--accent-2);
-      background: rgba(217,164,65,.10);
-      border: 1px solid rgba(217,164,65,.18);
+      background: var(--accent-soft);
+      border: 1px solid rgba(185,149,91,.22);
+      color: #dcc197;
+      font-size: 13px;
+      letter-spacing: .3px;
       margin-bottom: 18px;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(34px, 6vw, 62px);
-      line-height: 1.04;
-      letter-spacing: -1.5px;
+      font-size: clamp(36px, 6vw, 66px);
+      line-height: 1.02;
+      letter-spacing: -1.8px;
     }
 
     .hero-copy p {
+      margin: 18px 0 0;
       color: var(--muted);
       font-size: 18px;
-      line-height: 1.7;
-      margin: 18px 0 28px;
-      max-width: 62ch;
+      line-height: 1.75;
+      max-width: 60ch;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      margin-bottom: 24px;
+      margin-top: 28px;
     }
 
-    .hero-points {
+    .hero-highlights {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
+      margin-top: 26px;
     }
 
-    .stat-card {
+    .hero-highlight {
       padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--line-soft);
     }
 
-    .stat-number {
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 6px;
+    .hero-highlight strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 8px;
     }
 
-    .stat-label {
+    .hero-highlight span {
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    .hero-card {
+    .hero-visual {
       padding: 24px;
       display: grid;
-      gap: 18px;
+      gap: 16px;
       background:
-        radial-gradient(circle at top right, rgba(217,164,65,.22), transparent 32%),
+        radial-gradient(circle at top right, rgba(185,149,91,.22), transparent 32%),
         linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
     }
 
-    .mock-photo {
-      min-height: 280px;
-      border-radius: 18px;
+    .hero-image {
+      min-height: 540px;
+      border-radius: 20px;
       background:
-        linear-gradient(rgba(0,0,0,.22), rgba(0,0,0,.42)),
-        url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80') center/cover;
-      border: 1px solid rgba(255,255,255,.08);
+        linear-gradient(rgba(0,0,0,.14), rgba(0,0,0,.32)),
+        url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1400&q=80') center/cover;
+      border: 1px solid var(--line);
     }
 
-    .hero-list {
+    .hero-meta {
       display: grid;
       gap: 12px;
     }
 
-    .hero-list-item {
+    .hero-meta-row {
       display: flex;
       justify-content: space-between;
-      gap: 14px;
-      padding: 14px 16px;
+      gap: 16px;
+      padding: 15px 16px;
       border-radius: 14px;
       background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.06);
+      border: 1px solid var(--line-soft);
       color: var(--muted);
     }
 
-    .hero-list-item strong { color: var(--text); }
+    .hero-meta-row strong { color: var(--text); }
 
     section {
-      padding: 28px 0;
+      padding: 34px 0;
     }
 
     .section-head {
@@ -256,122 +283,102 @@
       align-items: end;
       justify-content: space-between;
       gap: 18px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .section-head h2 {
       margin: 0 0 8px;
-      font-size: clamp(26px, 4vw, 38px);
-      letter-spacing: -.8px;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -1px;
     }
 
     .section-head p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.7;
-      max-width: 60ch;
+      line-height: 1.75;
+      max-width: 62ch;
     }
 
-    .services-grid,
-    .projects-grid,
-    .reviews-grid {
+    .expertise-grid,
+    .engagement-grid,
+    .realisations-grid {
       display: grid;
       gap: 18px;
     }
 
-    .services-grid {
+    .expertise-grid,
+    .engagement-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .realisations-grid {
       grid-template-columns: repeat(3, 1fr);
     }
 
-    .service-card {
+    .expertise-card,
+    .engagement-card {
       padding: 24px;
     }
 
-    .service-icon {
+    .card-top {
       width: 52px;
       height: 52px;
       border-radius: 16px;
-      background: rgba(217,164,65,.12);
-      border: 1px solid rgba(217,164,65,.18);
       display: grid;
       place-items: center;
-      margin-bottom: 16px;
+      background: rgba(185,149,91,.12);
+      border: 1px solid rgba(185,149,91,.18);
+      color: #dcc197;
       font-size: 22px;
+      margin-bottom: 16px;
     }
 
-    .service-card h3,
-    .project-card h3,
+    .expertise-card h3,
+    .engagement-card h3,
+    .realisation-card h3,
     .contact-card h3 {
       margin: 0 0 10px;
       font-size: 22px;
+      letter-spacing: -.2px;
     }
 
-    .service-card p,
-    .project-card p,
-    .contact-card p,
-    .review-card p {
+    .expertise-card p,
+    .engagement-card p,
+    .realisation-card p,
+    .contact-card p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
-    .service-card ul {
-      padding-left: 18px;
-      margin: 16px 0 0;
-      color: var(--muted);
-      line-height: 1.8;
+    .realisation-card {
+      overflow: hidden;
     }
 
-    .projects-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .project-card { overflow: hidden; }
-
-    .project-cover {
-      height: 220px;
+    .realisation-cover {
+      height: 250px;
       background-size: cover;
       background-position: center;
+      border-bottom: 1px solid var(--line);
     }
 
-    .project-body {
+    .realisation-body {
       padding: 22px;
       display: grid;
       gap: 10px;
     }
 
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag {
-      font-size: 13px;
-      color: var(--text);
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.07);
+    .realisation-tag {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
       padding: 8px 10px;
       border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      background: rgba(255,255,255,.03);
     }
-
-    .reviews-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .review-card {
-      padding: 24px;
-    }
-
-    .review-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .stars { color: var(--accent-2); }
 
     .contact-wrap {
       display: grid;
@@ -390,16 +397,19 @@
     }
 
     .contact-item {
-      padding: 14px 16px;
+      padding: 15px 16px;
       border-radius: 14px;
       background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.06);
+      border: 1px solid var(--line-soft);
       color: var(--muted);
     }
+
+    .contact-item strong { color: var(--text); }
 
     form {
       display: grid;
       gap: 14px;
+      margin-top: 18px;
     }
 
     .field-row {
@@ -412,7 +422,7 @@
     textarea,
     select {
       width: 100%;
-      border: 1px solid rgba(255,255,255,.08);
+      border: 1px solid var(--line);
       background: rgba(255,255,255,.03);
       color: var(--text);
       border-radius: 14px;
@@ -422,7 +432,7 @@
     }
 
     input::placeholder,
-    textarea::placeholder { color: #7f8a99; }
+    textarea::placeholder { color: #7d8998; }
 
     textarea {
       min-height: 140px;
@@ -436,51 +446,48 @@
     }
 
     .footer {
-      padding: 30px 0 54px;
+      padding: 34px 0 58px;
       color: var(--muted);
     }
 
     .footer-box {
-      border-top: 1px solid rgba(255,255,255,.08);
+      border-top: 1px solid var(--line);
       padding-top: 22px;
       display: flex;
       justify-content: space-between;
-      gap: 16px;
+      gap: 18px;
       flex-wrap: wrap;
     }
 
-    .mobile-menu-btn {
-      display: none;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,.10);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 12px;
-      font: inherit;
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1120px) {
       .hero-grid,
       .contact-wrap,
-      .services-grid,
-      .projects-grid,
-      .reviews-grid {
+      .expertise-grid,
+      .engagement-grid,
+      .realisations-grid {
         grid-template-columns: 1fr 1fr;
       }
 
-      .hero-points,
+      .hero-highlights,
       .field-row {
         grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 760px) {
-      .nav {
-        align-items: flex-start;
-        padding: 14px 0;
-      }
-
       .mobile-menu-btn { display: inline-flex; }
+
+      .nav {
+        flex-wrap: wrap;
+        padding: 14px 0;
+        align-items: flex-start;
+      }
 
       .nav-links,
       .nav-cta {
@@ -493,14 +500,10 @@
         width: 100%;
       }
 
-      .nav {
-        flex-wrap: wrap;
-      }
-
       .nav-links.open {
         flex-direction: column;
         gap: 14px;
-        padding: 8px 0 0;
+        padding-top: 8px;
       }
 
       .nav-cta.open {
@@ -510,232 +513,213 @@
       }
 
       .hero-grid,
-      .services-grid,
-      .projects-grid,
-      .reviews-grid,
+      .expertise-grid,
+      .engagement-grid,
+      .realisations-grid,
       .contact-wrap {
         grid-template-columns: 1fr;
       }
 
       .hero-copy,
-      .hero-card,
-      .service-card,
-      .project-body,
-      .contact-card,
-      .review-card {
+      .hero-visual,
+      .expertise-card,
+      .engagement-card,
+      .realisation-body,
+      .contact-card {
         padding: 20px;
       }
 
-      h1 { line-height: 1.08; }
+      .hero-image { min-height: 360px; }
     }
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="container nav">
-      <a href="#home" class="brand">
-        <div class="brand-mark">R</div>
-        <div>Renova Pro</div>
+      <a href="#accueil" class="brand">
+        <div class="brand-mark">E</div>
+        <div class="brand-text">
+          <strong>EGS-MCC</strong>
+          <span>Entreprise générale du bâtiment</span>
+        </div>
       </a>
 
-      <button class="mobile-menu-btn" id="menuBtn">Menü</button>
+      <button class="mobile-menu-btn" id="menuBtn">Menu</button>
 
       <nav class="nav-links" id="navLinks">
-        <a href="#services">Hizmetler</a>
-        <a href="#projects">Projeler</a>
-        <a href="#reviews">Yorumlar</a>
-        <a href="#contact">İletişim</a>
+        <a href="#accueil">Accueil</a>
+        <a href="#savoir-faire">Savoir-faire</a>
+        <a href="#engagements">Engagements</a>
+        <a href="#realisations">Réalisations</a>
+        <a href="#contact">Contact</a>
       </nav>
 
       <div class="nav-cta" id="navCta">
-        <div class="pill">7/24 teklif talebi</div>
-        <a class="btn btn-primary" href="#contact">Teklif Al</a>
+        <a class="btn btn-primary" href="#contact">Nous contacter</a>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="hero" id="home">
+    <section class="hero" id="accueil">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <div class="eyebrow">✔ Güvenilir ekip • ✔ Zamanında teslim • ✔ Temiz işçilik</div>
-          <h1>Evinizi ve iş yerinizi baştan aşağı profesyonelce yeniliyoruz.</h1>
+          <div class="eyebrow">Île-de-France • Gros œuvre • Maçonnerie générale • Travaux tous corps d'état</div>
+          <h1>EGS-MCC accompagne des opérations de bâtiment avec une exécution rigoureuse, structurée et durable.</h1>
           <p>
-            Boya, alçı, mutfak-banyo yenileme, zemin uygulamaları ve komple tadilat işleriniz için
-            modern, güven veren ve teklif toplamaya odaklı bir web sitesi örneği.
+            Implantée en Île-de-France, EGS-MCC intervient sur des opérations de construction, de rénovation et de travaux de bâtiment avec une approche fondée sur la fiabilité d'exécution, la qualité du suivi et le respect des exigences opérationnelles.
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#contact">Ücretsiz Keşif Talebi</a>
-            <a class="btn btn-secondary" href="#projects">Projeleri İncele</a>
+            <a class="btn btn-primary" href="#contact">Prendre contact</a>
+            <a class="btn btn-secondary" href="#realisations">Voir les réalisations</a>
           </div>
 
-          <div class="hero-points">
-            <div class="stat-card">
-              <div class="stat-number">120+</div>
-              <div class="stat-label">Tamamlanan proje ve mutlu müşteri teslimi.</div>
+          <div class="hero-highlights">
+            <div class="hero-highlight">
+              <strong>Intervention</strong>
+              <span>Paris, Val-de-Marne et ensemble de l'Île-de-France selon les opérations.</span>
             </div>
-            <div class="stat-card">
-              <div class="stat-number">12 Yıl</div>
-              <div class="stat-label">Renovasyon ve iç mekan uygulama tecrübesi.</div>
+            <div class="hero-highlight">
+              <strong>Positionnement</strong>
+              <span>Entreprise orientée exécution, coordination et continuité de chantier.</span>
             </div>
-            <div class="stat-card">
-              <div class="stat-number">48 Saat</div>
-              <div class="stat-label">Teklif ve ön değerlendirme için hızlı geri dönüş.</div>
+            <div class="hero-highlight">
+              <strong>Approche</strong>
+              <span>Structure, méthode et pilotage sobre au service d'opérations exigeantes.</span>
             </div>
           </div>
         </div>
 
-        <aside class="hero-card">
-          <div class="mock-photo"></div>
-          <div class="hero-list">
-            <div class="hero-list-item">
-              <span>Hizmet Bölgesi</span>
-              <strong>Paris & Çevresi</strong>
+        <aside class="hero-visual">
+          <div class="hero-image"></div>
+          <div class="hero-meta">
+            <div class="hero-meta-row">
+              <span>Zone d'intervention</span>
+              <strong>Paris & Île-de-France</strong>
             </div>
-            <div class="hero-list-item">
-              <span>Uzmanlık</span>
-              <strong>Komple Tadilat</strong>
+            <div class="hero-meta-row">
+              <span>Nature d'activité</span>
+              <strong>Bâtiment & Gros œuvre</strong>
             </div>
-            <div class="hero-list-item">
-              <span>Ortalama Dönüş</span>
-              <strong>Aynı Gün</strong>
+            <div class="hero-meta-row">
+              <span>Cadre d'intervention</span>
+              <strong>Marchés publics & privés</strong>
             </div>
           </div>
         </aside>
       </div>
     </section>
 
-    <section id="services">
+    <section id="savoir-faire">
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>Hizmetler</h2>
-            <p>Bu alan, müşterinin “siz tam olarak ne yapıyorsunuz?” sorusunu 5 saniyede cevaplamalı.</p>
+            <h2>Savoir-faire</h2>
+            <p>Une présentation claire des domaines d'intervention, avec un langage d'entreprise de bâtiment plutôt qu'un discours commercial grand public.</p>
           </div>
         </div>
 
-        <div class="services-grid">
-          <article class="service-card">
-            <div class="service-icon">🏠</div>
-            <h3>Komple Tadilat</h3>
-            <p>Daire, ofis ve ticari alanlar için planlı ve baştan sona renovasyon hizmeti.</p>
-            <ul>
-              <li>Yıkım ve hazırlık</li>
-              <li>Duvar ve tavan işleri</li>
-              <li>Teslim öncesi son kontrol</li>
-            </ul>
+        <div class="expertise-grid">
+          <article class="expertise-card">
+            <div class="card-top">▣</div>
+            <h3>Maçonnerie générale</h3>
+            <p>Réalisation d'ouvrages de maçonnerie avec une attention portée à la solidité d'exécution, à la préparation de chantier et à la continuité opérationnelle.</p>
           </article>
 
-          <article class="service-card">
-            <div class="service-icon">🎨</div>
-            <h3>Boya & İç Mekan</h3>
-            <p>Modern renk uygulamaları, yüzey düzeltme ve temiz işçilik odaklı boya hizmeti.</p>
-            <ul>
-              <li>Saten alçı</li>
-              <li>Duvar boyama</li>
-              <li>Detay temizliği</li>
-            </ul>
+          <article class="expertise-card">
+            <div class="card-top">▤</div>
+            <h3>Gros œuvre</h3>
+            <p>Interventions sur les parties structurelles et les opérations fondamentales du bâtiment dans un cadre d'exécution maîtrisé.</p>
           </article>
 
-          <article class="service-card">
-            <div class="service-icon">🛁</div>
-            <h3>Mutfak & Banyo</h3>
-            <p>Fonksiyonel, estetik ve dayanıklı yaşam alanları için yenileme çözümleri.</p>
-            <ul>
-              <li>Seramik uygulama</li>
-              <li>Dolap ve tezgah</li>
-              <li>Armatür yenileme</li>
-            </ul>
+          <article class="expertise-card">
+            <div class="card-top">◫</div>
+            <h3>Rénovation de bâtiments</h3>
+            <p>Travaux de réhabilitation, reprise et transformation de bâtiments existants avec une logique de méthode, de coordination et de qualité.</p>
+          </article>
+
+          <article class="expertise-card">
+            <div class="card-top">◧</div>
+            <h3>Travaux tous corps d'état</h3>
+            <p>Prise en charge d'opérations nécessitant une coordination d'ensemble et un suivi cohérent entre les différents postes de travaux.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="projects">
+    <section id="engagements">
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>Öne Çıkan Projeler</h2>
-            <p>Güven satmanın en iyi yolu laf değil, görsel ve sonuç göstermektir.</p>
+            <h2>Engagements</h2>
+            <p>Une section plus crédible que des avis clients pour un positionnement institutionnel, sobre et orienté exécution.</p>
           </div>
         </div>
 
-        <div class="projects-grid">
-          <article class="project-card">
-            <div class="project-cover" style="background-image:url('https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80')"></div>
-            <div class="project-body">
-              <h3>Modern Mutfak Yenileme</h3>
-              <p>Eski mutfak alanının daha ferah, daha kullanışlı ve daha premium bir görünüme taşınması.</p>
-              <div class="tag-row">
-                <span class="tag">Mutfak</span>
-                <span class="tag">Dolap</span>
-                <span class="tag">Tezgah</span>
-              </div>
-            </div>
+        <div class="engagement-grid">
+          <article class="engagement-card">
+            <div class="card-top">01</div>
+            <h3>Rigueur d'exécution</h3>
+            <p>Chaque intervention s'inscrit dans une logique de préparation sérieuse, de suivi attentif et de maîtrise des conditions de réalisation.</p>
           </article>
 
-          <article class="project-card">
-            <div class="project-cover" style="background-image:url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80')"></div>
-            <div class="project-body">
-              <h3>Salon ve Duvar Yenileme</h3>
-              <p>Boya, tavan düzenleme ve zemin dokunuşlarıyla mekanın tamamen yenilenmesi.</p>
-              <div class="tag-row">
-                <span class="tag">Boya</span>
-                <span class="tag">Tavan</span>
-                <span class="tag">Zemin</span>
-              </div>
-            </div>
+          <article class="engagement-card">
+            <div class="card-top">02</div>
+            <h3>Réactivité opérationnelle</h3>
+            <p>La capacité à répondre avec sérieux, à organiser les interventions et à maintenir un rythme de chantier cohérent fait partie de la culture d'exécution.</p>
           </article>
 
-          <article class="project-card">
-            <div class="project-cover" style="background-image:url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80')"></div>
-            <div class="project-body">
-              <h3>Banyo Dönüşümü</h3>
-              <p>Eski ve dar alanın daha temiz, modern ve kullanıcı dostu bir banyoya dönüştürülmesi.</p>
-              <div class="tag-row">
-                <span class="tag">Banyo</span>
-                <span class="tag">Seramik</span>
-                <span class="tag">Armatür</span>
-              </div>
-            </div>
+          <article class="engagement-card">
+            <div class="card-top">03</div>
+            <h3>Qualité de suivi</h3>
+            <p>Le pilotage des opérations repose sur une communication claire, une présence de terrain et une attention portée à la bonne coordination des travaux.</p>
+          </article>
+
+          <article class="engagement-card">
+            <div class="card-top">04</div>
+            <h3>Respect des exigences</h3>
+            <p>Le cadre d'intervention intègre les impératifs de qualité, de méthode, de conformité et de tenue des délais propres aux opérations exigeantes.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="reviews">
+    <section id="realisations">
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>Müşteri Yorumları</h2>
-            <p>Buradaki içerik gerçek referanslarla değiştirildiğinde sitenin güven gücü ciddi artar.</p>
+            <h2>Réalisations</h2>
+            <p>Cette section doit inspirer sérieux et capacité d'intervention, sans effet catalogue ni excès marketing.</p>
           </div>
         </div>
 
-        <div class="reviews-grid">
-          <article class="review-card">
-            <div class="review-top">
-              <strong>Ayşe K.</strong>
-              <div class="stars">★★★★★</div>
+        <div class="realisations-grid">
+          <article class="realisation-card">
+            <div class="realisation-cover" style="background-image:url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80')"></div>
+            <div class="realisation-body">
+              <span class="realisation-tag">Réhabilitation</span>
+              <h3>Interventions sur bâtiment existant</h3>
+              <p>Opérations de reprise, d'adaptation et de rénovation dans un cadre nécessitant méthode, coordination et continuité d'exécution.</p>
             </div>
-            <p>İşin başından sonuna kadar düzenli iletişim kurdular, teslim ettikleri sonuç da temiz ve güven vericiydi.</p>
           </article>
 
-          <article class="review-card">
-            <div class="review-top">
-              <strong>Mehmet T.</strong>
-              <div class="stars">★★★★★</div>
+          <article class="realisation-card">
+            <div class="realisation-cover" style="background-image:url('https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&w=1200&q=80')"></div>
+            <div class="realisation-body">
+              <span class="realisation-tag">Structure</span>
+              <h3>Travaux de structure et gros œuvre</h3>
+              <p>Exécution d'opérations structurelles avec une logique de robustesse, de clarté technique et de discipline de chantier.</p>
             </div>
-            <p>Ev tadilatında en büyük korku işin uzamasıdır; burada hem zaman hem işçilik tarafı gayet iyiydi.</p>
           </article>
 
-          <article class="review-card">
-            <div class="review-top">
-              <strong>Claire D.</strong>
-              <div class="stars">★★★★★</div>
+          <article class="realisation-card">
+            <div class="realisation-cover" style="background-image:url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80')"></div>
+            <div class="realisation-body">
+              <span class="realisation-tag">Coordination</span>
+              <h3>Chantiers à pilotage multi-postes</h3>
+              <p>Organisation d'interventions mobilisant plusieurs corps de métier dans une logique de cohérence et d'avancement maîtrisé.</p>
             </div>
-            <p>Mutfak yenilemesinde beklentimizin üstünde bir sonuç aldık. İletişim ve planlama tarafı güçlüydü.</p>
           </article>
         </div>
       </div>
@@ -744,38 +728,40 @@
     <section id="contact">
       <div class="container contact-wrap">
         <div class="contact-card">
-          <h3>Hızlı İletişim</h3>
-          <p>Bu blokta gerçek telefon, e-posta, WhatsApp ve hizmet bölgesi bilgilerini göstereceksin.</p>
+          <h3>Contact</h3>
+          <p>Une prise de contact simple, directe et professionnelle, sans surcharge de promesses ni formulation trop commerciale.</p>
 
           <div class="contact-list">
-            <div class="contact-item"><strong>Telefon:</strong> +33 6 XX XX XX XX</div>
-            <div class="contact-item"><strong>E-posta:</strong> contact@renovapro.fr</div>
-            <div class="contact-item"><strong>Bölge:</strong> Cergy-Pontoise / Paris / Val-d’Oise</div>
-            <div class="contact-item"><strong>Çalışma Saatleri:</strong> Pazartesi - Cumartesi / 08:00 - 19:00</div>
+            <div class="contact-item"><strong>Entreprise :</strong> EGS-MCC</div>
+            <div class="contact-item"><strong>Adresse :</strong> 156 avenue du 8 mai 1945, 94170 Le Perreux-sur-Marne</div>
+            <div class="contact-item"><strong>Zone :</strong> Paris, Val-de-Marne, Île-de-France</div>
+            <div class="contact-item"><strong>E-mail :</strong> contact@egsmcc.fr</div>
+            <div class="contact-item"><strong>Téléphone :</strong> +33 6 XX XX XX XX</div>
           </div>
         </div>
 
         <div class="contact-card">
-          <h3>Teklif Formu</h3>
-          <p>Şu an demo form. İstersen bunu sonra WhatsApp’a, Formspree’ye ya da gerçek backende bağlarız.</p>
+          <h3>Prise de contact</h3>
+          <p>Le formulaire peut ensuite être relié à une boîte mail, à Formspree ou à une adresse de contact dédiée.</p>
 
-          <form id="quoteForm">
+          <form id="contactForm">
             <div class="field-row">
-              <input type="text" placeholder="Ad Soyad" required />
-              <input type="tel" placeholder="Telefon" required />
+              <input type="text" placeholder="Nom / Structure" required />
+              <input type="tel" placeholder="Téléphone" />
             </div>
             <div class="field-row">
-              <input type="email" placeholder="E-posta" />
+              <input type="email" placeholder="E-mail" required />
               <select>
-                <option>Hizmet Seçin</option>
-                <option>Komple Tadilat</option>
-                <option>Boya & İç Mekan</option>
-                <option>Mutfak & Banyo</option>
+                <option>Objet de la demande</option>
+                <option>Prise de contact</option>
+                <option>Échange professionnel</option>
+                <option>Demande de collaboration</option>
+                <option>Consultation / marché</option>
               </select>
             </div>
-            <textarea placeholder="Kısaca ihtiyacınızı yazın..."></textarea>
-            <button class="btn btn-primary" type="submit">Teklif Gönder</button>
-            <div class="form-note" id="formMessage">Form şu an demo modunda çalışıyor.</div>
+            <textarea placeholder="Précisez votre demande..."></textarea>
+            <button class="btn btn-primary" type="submit">Envoyer</button>
+            <div class="form-note" id="formMessage">Le formulaire est actuellement présenté en version démonstration.</div>
           </form>
         </div>
       </div>
@@ -784,8 +770,12 @@
 
   <footer class="footer">
     <div class="container footer-box">
-      <div>© 2026 Renova Pro. Tüm hakları saklıdır.</div>
-      <div>Bu demo yapı, gerçek firma bilgilerine göre özelleştirilmeye hazırdır.</div>
+      <div>© 2026 EGS-MCC — Entreprise générale du bâtiment</div>
+      <div class="footer-links">
+        <a href="#">Mentions légales</a>
+        <a href="#">Politique de confidentialité</a>
+        <a href="#contact">Contact</a>
+      </div>
     </div>
   </footer>
 
@@ -793,7 +783,7 @@
     const menuBtn = document.getElementById('menuBtn');
     const navLinks = document.getElementById('navLinks');
     const navCta = document.getElementById('navCta');
-    const quoteForm = document.getElementById('quoteForm');
+    const contactForm = document.getElementById('contactForm');
     const formMessage = document.getElementById('formMessage');
 
     menuBtn?.addEventListener('click', () => {
@@ -801,9 +791,9 @@
       navCta.classList.toggle('open');
     });
 
-    quoteForm?.addEventListener('submit', (e) => {
+    contactForm?.addEventListener('submit', (e) => {
       e.preventDefault();
-      formMessage.textContent = 'Demo form gönderildi. Sonraki aşamada bunu gerçek iletişim akışına bağlayacağız.';
+      formMessage.textContent = 'Le formulaire de démonstration a bien été envoyé. Il pourra ensuite être connecté à votre adresse e-mail professionnelle.';
     });
   </script>
 </body>
