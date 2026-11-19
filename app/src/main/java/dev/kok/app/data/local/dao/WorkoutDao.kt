@@ -115,6 +115,17 @@ interface WorkoutDao {
     @Query("DELETE FROM workout_session_log WHERE id = :id")
     suspend fun deleteSession(id: Long)
 
+    @Query(
+        """
+        SELECT s.workout_day_id FROM workout_session_log s
+        JOIN workout_day d ON d.id = s.workout_day_id
+        JOIN workout_program p ON p.id = d.program_id
+        WHERE p.is_active = 1
+        ORDER BY s.started_at DESC LIMIT 1
+        """,
+    )
+    fun observeLastTrainedDayIdOfActiveProgram(): Flow<Long?>
+
     @Transaction
     @Query(
         """

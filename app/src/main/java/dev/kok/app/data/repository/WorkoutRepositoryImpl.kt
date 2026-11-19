@@ -132,6 +132,8 @@ class WorkoutRepositoryImpl @Inject constructor(
 
     override fun observeSelectedDayId(date: LocalDate): Flow<Long?> = logs.observeActiveWorkoutDayId(date)
 
+    override fun observeLastTrainedDayId(): Flow<Long?> = dao.observeLastTrainedDayIdOfActiveProgram()
+
     override suspend fun selectWorkoutDay(date: LocalDate, workoutDayId: Long?) = db.withTransaction {
         logs.setActiveWorkoutDay(logs.ensure(date), workoutDayId)
     }

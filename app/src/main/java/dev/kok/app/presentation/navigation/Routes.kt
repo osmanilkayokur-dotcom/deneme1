@@ -12,3 +12,8 @@ import kotlinx.serialization.Serializable
 @Serializable data object ChatRoute
 
 @Serializable data object SettingsRoute
+
+@Serializable data object WorkoutRoute
+
+/** [programId] 0 ise yeni program. */
+@Serializable data class ProgramEditorRoute(val programId: Long = 0)

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Chat
 import androidx.compose.material.icons.outlined.Eco
+import androidx.compose.material.icons.outlined.FitnessCenter
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +31,8 @@ import dev.kok.app.presentation.feature.dashboard.DashboardRoute as DashboardScr
 import dev.kok.app.presentation.feature.chat.ChatRoute as ChatScreen
 import dev.kok.app.presentation.feature.nutrition.AddMealRouteScreen
 import dev.kok.app.presentation.feature.settings.SettingsRoute as SettingsScreen
+import dev.kok.app.presentation.feature.workout.ProgramEditorRouteScreen
+import dev.kok.app.presentation.feature.workout.WorkoutRoute as WorkoutScreen
 import dev.kok.app.presentation.feature.profile.ProfileRoute as ProfileScreen
 import kotlin.reflect.KClass
 
@@ -38,6 +41,7 @@ private data class TopTab(val label: String, val icon: ImageVector, val route: A
 private val tabs = listOf(
     TopTab("Bugün", Icons.Outlined.Eco, DashboardRoute, DashboardRoute::class),
     TopTab("Asistan", Icons.AutoMirrored.Outlined.Chat, ChatRoute, ChatRoute::class),
+    TopTab("Spor", Icons.Outlined.FitnessCenter, WorkoutRoute, WorkoutRoute::class),
     TopTab("Profil", Icons.Outlined.Person, ProfileRoute(showBack = false), ProfileRoute::class),
 )
 
@@ -97,6 +101,12 @@ fun KokApp() {
                 }
                 composable<SettingsRoute> {
                     SettingsScreen(onBack = { nav.popBackStack() })
+                }
+                composable<WorkoutRoute> {
+                    WorkoutScreen(onEditProgram = { id -> nav.navigate(ProgramEditorRoute(id ?: 0)) })
+                }
+                composable<ProgramEditorRoute> {
+                    ProgramEditorRouteScreen(onDone = { nav.popBackStack() })
                 }
                 composable<AddMealRoute> {
                     AddMealRouteScreen(

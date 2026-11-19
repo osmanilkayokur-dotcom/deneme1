@@ -58,6 +58,8 @@ interface WorkoutRepository {
     suspend fun activateProgram(id: Long)
 
     fun observeSelectedDayId(date: LocalDate): Flow<Long?>
+    /** Aktif programda en son antrenman kaydı girilen gün. */
+    fun observeLastTrainedDayId(): Flow<Long?>
     suspend fun selectWorkoutDay(date: LocalDate, workoutDayId: Long?)
     fun observeWorkoutDay(id: Long): Flow<WorkoutDay?>
 
