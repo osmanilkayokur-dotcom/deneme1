@@ -48,6 +48,8 @@ interface WorkoutRepository {
     suspend fun getExercises(): List<Exercise>
     suspend fun getMuscleGroups(): List<MuscleGroup>
     suspend fun getProgram(id: Long): WorkoutProgram?
+    suspend fun getPrograms(): List<WorkoutProgram>
+    suspend fun getProgramIdByName(name: String): Long?
 
     /** Aynı adlı program varsa günleri baştan yazılır; yoksa yeni program oluşur. Program id'si döner. */
     suspend fun createOrUpdateProgram(draft: ProgramDraft, activate: Boolean): Long
@@ -89,4 +91,34 @@ interface ChatRepository {
     suspend fun append(message: ChatMessage): Long
     suspend fun updateAction(id: Long, summary: String?, undoRef: String?)
     suspend fun clear()
+}
+
+data class AssistantSettings(val apiKey: String?, val model: String) {
+    val isConfigured: Boolean get() = !apiKey.isNullOrBlank()
+}
+
+interface AssistantSettingsRepository {
+    fun observe(): Flow<AssistantSettings?>
+    suspend fun get(): AssistantSettings
+    /** [apiKey] null ise mevcut anahtar korunur, yalnızca model güncellenir. */
+    suspend fun save(apiKey: String?, model: String)
+    suspend fun clearApiKey()
+}
+
+class AssistantNotConfiguredException : IllegalStateException("Gemini API anahtarı girilmemiş")
+
+class AssistantRequestException(message: String, val httpCode: Int? = null) : RuntimeException(message)
+
+interface AssistantGateway {
+    /** Sohbet geçmişine göre bir sonraki model yanıtını üretir. */
+    suspend fun generate(
+        history: List<dev.kok.app.domain.model.ChatMessage>,
+        context: dev.kok.app.domain.model.AssistantContext,
+    ): dev.kok.app.domain.model.AssistantReply
+
+    /** Saklanmış bir model mesajındaki fonksiyon çağrısını domain aksiyonuna çevirir. */
+    fun parseAction(message: dev.kok.app.domain.model.ChatMessage, today: java.time.LocalDate): dev.kok.app.domain.model.AssistantAction?
+
+    /** Aksiyon sonucunu modele dönecek fonksiyon yanıtı yüküne çevirir. */
+    fun encodeOutcome(toolName: String, outcome: dev.kok.app.domain.model.ToolOutcome): String
 }

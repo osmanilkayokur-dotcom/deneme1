@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Chat
 import androidx.compose.material.icons.outlined.Eco
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Icon
@@ -26,7 +27,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import dev.kok.app.presentation.feature.dashboard.DashboardRoute as DashboardScreen
+import dev.kok.app.presentation.feature.chat.ChatRoute as ChatScreen
 import dev.kok.app.presentation.feature.nutrition.AddMealRouteScreen
+import dev.kok.app.presentation.feature.settings.SettingsRoute as SettingsScreen
 import dev.kok.app.presentation.feature.profile.ProfileRoute as ProfileScreen
 import kotlin.reflect.KClass
 
@@ -34,6 +37,7 @@ private data class TopTab(val label: String, val icon: ImageVector, val route: A
 
 private val tabs = listOf(
     TopTab("Bugün", Icons.Outlined.Eco, DashboardRoute, DashboardRoute::class),
+    TopTab("Asistan", Icons.AutoMirrored.Outlined.Chat, ChatRoute, ChatRoute::class),
     TopTab("Profil", Icons.Outlined.Person, ProfileRoute(showBack = false), ProfileRoute::class),
 )
 
@@ -87,6 +91,12 @@ fun KokApp() {
                         showBack = route.showBack,
                         onDone = { if (route.showBack) nav.popBackStack() },
                     )
+                }
+                composable<ChatRoute> {
+                    ChatScreen(onOpenSettings = { nav.navigate(SettingsRoute) })
+                }
+                composable<SettingsRoute> {
+                    SettingsScreen(onBack = { nav.popBackStack() })
                 }
                 composable<AddMealRoute> {
                     AddMealRouteScreen(

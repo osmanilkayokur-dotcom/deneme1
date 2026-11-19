@@ -8,3 +8,7 @@ import kotlinx.serialization.Serializable
 
 /** [date] ISO yyyy-MM-dd */
 @Serializable data class AddMealRoute(val date: String)
+
+@Serializable data object ChatRoute
+
+@Serializable data object SettingsRoute

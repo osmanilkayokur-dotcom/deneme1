@@ -51,6 +51,10 @@ class WorkoutRepositoryImpl @Inject constructor(
 
     override suspend fun getProgram(id: Long): WorkoutProgram? = dao.getProgram(id)?.toDomain()
 
+    override suspend fun getPrograms(): List<WorkoutProgram> = dao.getPrograms().map { it.toDomain() }
+
+    override suspend fun getProgramIdByName(name: String): Long? = dao.findProgramByName(name.trim())?.id
+
     override suspend fun createOrUpdateProgram(draft: ProgramDraft, activate: Boolean): Long = db.withTransaction {
         require(draft.name.isNotBlank()) { "Program adı boş olamaz" }
         require(draft.days.isNotEmpty()) { "Program en az bir gün içermeli" }

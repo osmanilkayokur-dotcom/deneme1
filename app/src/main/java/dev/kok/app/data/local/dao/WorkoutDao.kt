@@ -28,6 +28,10 @@ interface WorkoutDao {
     fun observePrograms(): Flow<List<ProgramWithDays>>
 
     @Transaction
+    @Query("SELECT * FROM workout_program ORDER BY is_active DESC, created_at DESC")
+    suspend fun getPrograms(): List<ProgramWithDays>
+
+    @Transaction
     @Query("SELECT * FROM workout_program WHERE is_active = 1 LIMIT 1")
     fun observeActiveProgram(): Flow<ProgramWithDays?>
 
