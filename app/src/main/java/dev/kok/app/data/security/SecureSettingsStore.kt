@@ -5,11 +5,15 @@ import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.kok.app.core.IoDispatcher
 import dev.kok.app.domain.repository.AssistantSettings
 import dev.kok.app.domain.repository.AssistantSettingsRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,13 +24,25 @@ import javax.inject.Singleton
 @Singleton
 class SecureSettingsStore @Inject constructor(
     @ApplicationContext private val context: Context,
+    @IoDispatcher private val io: CoroutineDispatcher,
 ) : AssistantSettingsRepository {
 
+    /**
+     * Keystore anahtarı bozulursa (ör. cihaz yedekten geri yüklendiğinde) dosya okunamaz;
+     * bu durumda şifreli dosya silinip yeniden oluşturulur — kullanıcı anahtarı tekrar girer.
+     */
     private val prefs: SharedPreferences by lazy {
+        runCatching { create() }.getOrElse {
+            context.deleteSharedPreferences(FILE_NAME)
+            create()
+        }
+    }
+
+    private fun create(): SharedPreferences {
         val masterKey = MasterKey.Builder(context)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
-        EncryptedSharedPreferences.create(
+        return EncryptedSharedPreferences.create(
             context,
             FILE_NAME,
             masterKey,
@@ -37,23 +53,22 @@ class SecureSettingsStore @Inject constructor(
 
     private val state = MutableStateFlow<AssistantSettings?>(null)
 
-    override fun observe(): Flow<AssistantSettings?> {
-        if (state.value == null) state.value = read()
-        return state.asStateFlow()
+    override fun observe(): Flow<AssistantSettings?> = state.asStateFlow().onStart {
+        if (state.value == null) state.value = withContext(io) { read() }
     }
 
-    override suspend fun get(): AssistantSettings = read().also { state.value = it }
+    override suspend fun get(): AssistantSettings = withContext(io) { read() }.also { state.value = it }
 
-    override suspend fun save(apiKey: String?, model: String) {
+    override suspend fun save(apiKey: String?, model: String) = withContext(io) {
         prefs.edit().apply {
             if (apiKey != null) putString(KEY_API, apiKey.trim())
             putString(KEY_MODEL, model.trim().ifBlank { DEFAULT_MODEL })
-        }.apply()
+        }.commit()
         state.value = read()
     }
 
-    override suspend fun clearApiKey() {
-        prefs.edit().remove(KEY_API).apply()
+    override suspend fun clearApiKey() = withContext(io) {
+        prefs.edit().remove(KEY_API).commit()
         state.value = read()
     }
 

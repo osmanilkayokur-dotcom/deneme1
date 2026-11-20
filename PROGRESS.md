@@ -3,8 +3,8 @@
 > **Yapay Zeka İçin Not:** Bu dosya oturumlar arası hafıza köprüsüdür. Her faz tamamlandığında sadece değişen/eklenen kritik bilgileri kısa maddeler halinde güncelle; gereksiz uzun açıklamalar ekleme.
 
 ## Mevcut Durum
-- **Aktif Faz:** Faz 5 (Aylık ölçüm + istatistik)
-- **Durum:** Faz 0–3 CI'da yeşil; Faz 4 push edildi (CI kontrol edilecek)
+- **Aktif Faz:** Tüm fazlar kodlandı → kullanıcı testi ve geri bildirim
+- **Durum:** Faz 0–4 CI'da yeşil; Faz 5–6 + testler push edildi
 - **Son Güncelleme:** 2026-11-20 (gece otomatik oturum)
 
 ## Faz Kontrol Listesi
@@ -13,8 +13,8 @@
 - [x] **Faz 2:** BMR/TDEE motoru, manuel beslenme/su takibi, yatay barlar, Dashboard
 - [x] **Faz 3:** Gemini API Function Calling (`log_meal`, `create_or_update_workout_program`) ve Sohbet Sekmesi
 - [x] **Faz 4:** Dinamik spor programı yönetimi + SceneView 3D 360° Kas Haritası
-- [ ] **Faz 5:** Aylık kilitli vücut ölçümü + `StatsMetaphorMapper` ve Haftalık/Aylık özetler
-- [ ] **Faz 6:** Doğa mikro-animasyonları (buluttan su, çeltikten pirinç vb.) + test ve optimizasyon
+- [x] **Faz 5:** Aylık kilitli vücut ölçümü + `StatsMetaphorMapper` ve Haftalık/Aylık özetler
+- [x] **Faz 6:** Doğa mikro-animasyonları (buluttan su, çeltikten pirinç vb.) + test ve optimizasyon
 
 ## Sabitlenen Teknik Kararlar
 - **Paket Adı:** `dev.kok.app` (uygulama adı "Kök") — geçici, NOTES.md Soru 2
@@ -28,9 +28,12 @@
 - **Entities:** 13 tablo (bkz. ARCHITECTURE.md) + `DatabaseSeeder` (18 kas, 40 egzersiz)
 - **DAOs / Repositories:** Profile, DailyLog, Meal, Workout, BodyMeasurement, Chat + `SecureSettingsStore` (EncryptedSharedPreferences)
 - **Domain:** `MetabolismCalculator`, `StatsMetaphorMapper`, `TurkishSuffix`, `ChatAssistantUseCase`, `ObserveTrainingTodayUseCase`, `MuscleHighlight`, `LogWorkoutSessionUseCase`
-- **Ekranlar:** Dashboard (Bugün), AddMeal, Profile, Chat (Asistan), Settings, Workout (Spor), ProgramEditor
+- **Ekranlar:** Dashboard (Bugün), AddMeal, Profile, Chat (Asistan), Settings, Workout (Spor), ProgramEditor, Body (Vücut), Stats (Özet)
+- **Animasyonlar:** `RainCloud` (su), `FoodOriginAnimation` (6 kategori), su testisi dalga sıçraması, bar yay animasyonları
+- **Testler:** domain motorları + use case'ler (JVM), `GeminiGatewayTest` (ayrıştırma, geçmiş sentezi)
 
 ## Sonraki Oturum İçin Notlar & Bilinen Eksikler
 - Domain testleri JVM'de hızlı koşturulabilir (domain+core paketleri saf Kotlin).
 - Gemini onay akışı: MODEL mesajı (functionCall ham JSON) → kart → onay → TOOL mesajı (functionResponse) → model kapanış mesajı. Yanıtsız çağrılara CANCELLED sentezlenir.
-- Faz 6 bekleyen: buluttan yağmur su animasyonu, kategoriye göre yemek animasyonları (WaterCard'da yalnızca dalga sıçraması var).
+- Bekleyen (kullanıcıya bağlı): Gemini API anahtarı girişi, 3D `.glb` modeli, NOTES.md soruları.
+- Room şeması CI artifact'ı (`room-schemas`) olarak yükleniyor; şema değişmeden önce `app/schemas/.../1.json` repoya eklenmeli.
