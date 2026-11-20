@@ -15,7 +15,11 @@ Gece boyunca otomatik ilerlerken çıkan konular. Uyanınca bunlara bakıp berab
 3. **Cinsiyet:** 3D model erkek, ama BMR formülü cinsiyete göre değişir. Profilde seçim var; sadece erkek mi kalsın?
 4. **Gemini yemek kaydı:** SPEC "onay kartı veya doğrudan kayıt + geri al" diyor. Varsayılan olarak **onay kartı** yapacağım. Uygun mu?
 5. **Koyu tema:** RULES'ta opsiyonel. Sistem ayarını takip edecek şekilde hazırlıyorum.
-6. **Tek modül:** Gradle'da çok modüllü yapı yerine tek modül + katman paketleri seçtim (derleme hızı). Uygun mu?
+6. **TDEE ve antrenman kalorisi:** "Sporla günlük ihtiyaç" = BMR × aktivite çarpanı (çarpan antrenmanı zaten içeriyor). Kaydettiğin antrenmanın kalorisi ayrıca gösteriliyor ama ihtiyaca eklenmiyor (çift sayım olmasın diye). Eklenmesini ister misin?
+7. **Program güncellemesini geri alma:** Asistanla oluşturulan *yeni* program geri alınabiliyor; mevcut programı *güncelleme* geri alınamıyor (eski hali saklanmıyor). Gerekirse sürüm geçmişi ekleriz.
+8. **Antrenman kaydı detayı:** Şu an süre + yoğunluk (MET) ile kalori tahmini kaydediliyor. Set/tekrar/ağırlık girişini (tablo hazır: `workout_set_log`) ekranda da isteyecek misin?
+9. **Alt menü:** 5 sekme sınırı yüzünden Profil, Vücut sekmesinin içine taşındı (Bugün · Asistan · Spor · Vücut · Özet).
+10. **Tek modül:** Gradle'da çok modüllü yapı yerine tek modül + katman paketleri seçtim (derleme hızı). Uygun mu?
 
 ## 🧭 Alınan Kararlar (otomatik)
 - Tarihler Türkiye saatine göre cihaz yerel saatiyle (`LocalDate.now()`) hesaplanır.

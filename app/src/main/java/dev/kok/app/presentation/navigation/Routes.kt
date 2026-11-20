@@ -17,3 +17,7 @@ import kotlinx.serialization.Serializable
 
 /** [programId] 0 ise yeni program. */
 @Serializable data class ProgramEditorRoute(val programId: Long = 0)
+
+@Serializable data object BodyRoute
+
+@Serializable data object StatsRoute
