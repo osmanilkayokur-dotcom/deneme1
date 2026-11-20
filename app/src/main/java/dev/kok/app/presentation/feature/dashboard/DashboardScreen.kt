@@ -1,5 +1,6 @@
 package dev.kok.app.presentation.feature.dashboard
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.kok.app.domain.model.FoodCategory
 import dev.kok.app.domain.model.Meal
 import dev.kok.app.domain.usecase.DailyOverview
 import dev.kok.app.presentation.components.BranchDivider
@@ -53,6 +55,7 @@ import dev.kok.app.presentation.components.GoalBar
 import dev.kok.app.presentation.components.LeafBadge
 import dev.kok.app.presentation.components.PaperCard
 import dev.kok.app.presentation.components.SkyHeader
+import dev.kok.app.presentation.components.animation.FoodOriginAnimation
 import dev.kok.app.presentation.components.formatAmount
 import dev.kok.app.presentation.feature.nutrition.WaterCard
 import dev.kok.app.presentation.theme.KokTheme
@@ -69,6 +72,8 @@ private val DATE_FMT = DateTimeFormatter.ofPattern("d MMMM, EEEE", TR)
 fun DashboardRoute(
     onAddMeal: (LocalDate) -> Unit,
     onOpenProfile: () -> Unit,
+    mealAnimation: FoodCategory? = null,
+    onMealAnimationDone: () -> Unit = {},
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -108,6 +113,9 @@ fun DashboardRoute(
         },
         contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0),
     ) { padding ->
+        mealAnimation?.let { category ->
+            MealAnimationOverlay(category, onMealAnimationDone)
+        }
         when (val s = state) {
             DashboardUiState.Loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
@@ -349,6 +357,36 @@ private fun MealRow(meal: Meal, onDelete: () -> Unit, modifier: Modifier = Modif
             IconButton(onClick = onDelete, modifier = Modifier.size(40.dp)) {
                 Icon(Icons.Outlined.Delete, contentDescription = "${meal.name} sil")
             }
+        }
+    }
+}
+
+/** Yemek eklendikten sonra ekranın üstünde kısa süre oynayan doğa kökeni animasyonu. */
+@Composable
+fun MealAnimationOverlay(category: FoodCategory, onDone: () -> Unit) {
+    val caption = when (category) {
+        FoodCategory.GRAIN_RICE -> "Çeltikten kaseye"
+        FoodCategory.VEGETABLE -> "Topraktan filizlendi"
+        FoodCategory.FRUIT -> "Dalından düştü"
+        FoodCategory.PROTEIN -> "Kabuğundan çıktı"
+        FoodCategory.DAIRY -> "Kovadan kaseye"
+        FoodCategory.OTHER -> "Rüzgârla geldi"
+    }
+    androidx.compose.ui.window.Popup(alignment = Alignment.Center) {
+        Column(
+            Modifier
+                .size(220.dp)
+                .background(MaterialTheme.colorScheme.surfaceContainerLow, MaterialTheme.shapes.extraLarge)
+                .padding(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            FoodOriginAnimation(
+                category = category,
+                colors = KokTheme.nature,
+                modifier = Modifier.weight(1f).fillMaxWidth(),
+                onFinished = onDone,
+            )
+            Text(caption, style = MaterialTheme.typography.titleMedium)
         }
     }
 }

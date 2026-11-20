@@ -56,6 +56,7 @@ import dev.kok.app.presentation.components.BranchDivider
 import dev.kok.app.presentation.components.LeafBadge
 import dev.kok.app.presentation.components.PaperCard
 import dev.kok.app.presentation.components.formatAmount
+import dev.kok.app.presentation.feature.dashboard.MealAnimationOverlay
 import dev.kok.app.presentation.theme.KokTheme
 import kotlin.math.roundToInt
 
@@ -71,6 +72,8 @@ fun ChatRoute(onOpenSettings: () -> Unit, viewModel: ChatViewModel = hiltViewMod
         val count = state.items.size + if (state.busy) 1 else 0
         if (count > 0) listState.animateScrollToItem(count - 1)
     }
+
+    state.mealAnimation?.let { MealAnimationOverlay(it, viewModel::mealAnimationDone) }
 
     if (confirmClear) {
         AlertDialog(

@@ -12,6 +12,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -35,6 +36,7 @@ import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.unit.dp
 import dev.kok.app.presentation.components.BranchDivider
 import dev.kok.app.presentation.components.PaperCard
+import dev.kok.app.presentation.components.animation.RainCloud
 import dev.kok.app.presentation.components.formatAmount
 import dev.kok.app.presentation.theme.KokTheme
 import kotlin.math.PI
@@ -43,7 +45,7 @@ import kotlin.math.sin
 
 /**
  * Su takibi kartı: testi biçimli kap, seviye dalgalanarak yükselir.
- * [pulse] her su eklemede artar ve kısa bir dalga sıçraması tetikler.
+ * [pulse] her su eklemede artar: kabın üstünde bulut belirir, yağmur yağar ve su dalgalanarak yükselir.
  */
 @Composable
 fun WaterCard(
@@ -66,7 +68,19 @@ fun WaterCard(
         BranchDivider(Modifier.height(14.dp))
         Spacer(Modifier.height(6.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
-            WaterJar(ratio = ratio, pulse = pulse, modifier = Modifier.size(width = 76.dp, height = 104.dp))
+            Box(Modifier.size(width = 84.dp, height = 140.dp)) {
+                WaterJar(
+                    ratio = ratio,
+                    pulse = pulse,
+                    modifier = Modifier.align(Alignment.BottomCenter).size(width = 76.dp, height = 104.dp),
+                )
+                RainCloud(
+                    trigger = pulse,
+                    cloud = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    drop = KokTheme.nature.water,
+                    modifier = Modifier.matchParentSize(),
+                )
+            }
             Spacer(Modifier.width(18.dp))
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(

@@ -6,7 +6,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.kok.app.domain.model.AssistantAction
 import dev.kok.app.domain.model.ChatMessage
 import dev.kok.app.domain.model.ChatRole
+import dev.kok.app.domain.model.FoodCategory
 import dev.kok.app.domain.repository.AssistantNotConfiguredException
+import dev.kok.app.domain.repository.AssistantRequestException
 import dev.kok.app.domain.repository.AssistantSettingsRepository
 import dev.kok.app.domain.usecase.ChatAssistantUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +34,8 @@ data class ChatUiState(
     val busy: Boolean = false,
     val error: String? = null,
     val canRetry: Boolean = false,
+    /** Onaylanan yemek kaydının baskın kategorisi: doğa animasyonu için. */
+    val mealAnimation: FoodCategory? = null,
 )
 
 @HiltViewModel
@@ -64,7 +68,17 @@ class ChatViewModel @Inject constructor(
 
     fun send(text: String) = run(retryable = true) { assistant.send(text) }
     fun retry() = run(retryable = true) { assistant.retry() }
-    fun confirm(item: ChatItem) = run { assistant.confirm(item.message) }
+    fun confirm(item: ChatItem) = run {
+        assistant.confirm(item.message).also { result ->
+            val saved = result.isSuccess || result.exceptionOrNull() is AssistantRequestException
+            val meals = (item.action as? AssistantAction.LogMeals)?.meals
+            if (saved && meals != null) {
+                ui.update { it.copy(mealAnimation = meals.maxByOrNull { m -> m.grams }?.category) }
+            }
+        }
+    }
+
+    fun mealAnimationDone() = ui.update { it.copy(mealAnimation = null) }
     fun reject(item: ChatItem) = run { assistant.reject(item.message) }
     fun undo(item: ChatItem) = run { assistant.undo(item.message) }
     fun clear() = run { runCatching { assistant.clear() } }
